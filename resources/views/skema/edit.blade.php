@@ -1,35 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Edit Skema</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-    <h1>Edit Skema Sertifikasi</h1>
+<div class="container">
 
-    <form action="{{ route('skema.update', $skema->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="header">
+        <h1>Edit Skema Sertifikasi</h1>
+        <p>Ubah data skema sertifikasi</p>
+    </div>
 
-        <label>Kode Skema</label><br>
-        <input type="text" name="kode" value="{{ $skema->kode }}" required>
+    <div class="card">
 
-        <br><br>
+        @if ($errors->any())
+            <div class="error-box">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <label>Nama Skema</label><br>
-        <input type="text" name="nama" value="{{ $skema->nama }}" required>
+        <form
+            action="{{ route('skema.update', $skema->id) }}"
+            method="POST"
+        >
 
-        <br><br>
+            @csrf
+            @method('PUT')
 
-        <label>Deskripsi</label><br>
-        <textarea name="deskripsi">{{ $skema->deskripsi }}</textarea>
+            <div class="form-group">
 
-        <br><br>
+                <label>Kode Skema</label>
 
-        <button type="submit">Update</button>
-        <a href="{{ route('skema.index') }}">Batal</a>
+                <input
+                    type="text"
+                    name="kode"
+                    value="{{ old('kode', $skema->kode) }}"
+                    required
+                >
 
-    </form>
+            </div>
+
+            <div class="form-group">
+
+                <label>Nama Skema</label>
+
+                <input
+                    type="text"
+                    name="nama"
+                    value="{{ old('nama', $skema->nama) }}"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Deskripsi</label>
+
+                <textarea
+                    name="deskripsi"
+                    rows="5"
+                >{{ old('deskripsi', $skema->deskripsi) }}</textarea>
+
+            </div>
+
+            <div class="action-group">
+
+                <button type="submit">
+                    Update
+                </button>
+
+                <a href="{{ route('skema.index') }}" class="btn btn-secondary">
+                    Batal
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

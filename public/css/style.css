@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f0f8;
+    color: #444;
+    margin: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.header {
+    background: #b9a3cf;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1,
+h3 {
+    color: #6d5685;
+}
+
+a {
+    color: #6d5685;
+    text-decoration: none;
+}
+
+button,
+.btn {
+    background: #9d86b5;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: #ddd3e5;
+    color: #444;
+}
+
+.btn-danger {
+    background: #c47f8a;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+    margin: 5px 0 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #ddd1e7;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+.error-box {
+    background: #fcecec;
+    color: #9b4b4b;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.summary {
+    display: flex;
+    gap: 15px;
+}
+
+.summary-box {
+    background: #eee7f3;
+    padding: 15px;
+    flex: 1;
+}
+
+.summary-number {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.search-box {
+    margin: 20px 0;
+}
+
+.login-page {
+    width: 400px;
+    max-width: 90%;
+    margin: 100px auto;
+}
+
+.login-card {
+    background: white;
+    padding: 30px;
+}
+
+.login-title {
+    text-align: center;
+}
+
+.detail-table {
+    max-width: 700px;
+}
+
+.action-group {
+    margin: 10px 0;
+}

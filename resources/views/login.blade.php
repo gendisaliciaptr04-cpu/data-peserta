@@ -1,27 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Login Admin</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-    <h2>Login Admin</h2>
+<div class="login-page">
 
-    @if ($errors->any())
-        <p style="color:red;">{{ $errors->first() }}</p>
-    @endif
+    <div class="login-card">
 
-    <form action="{{ route('login.process') }}" method="POST">
-        @csrf
+        <div class="login-title">
+            <h1>Login Admin</h1>
+            <p>Aplikasi Data Peserta Sertifikasi</p>
+        </div>
 
-        <label>Email</label><br>
-        <input type="email" name="email"><br><br>
+        @if ($errors->any())
+            <div class="error-box">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <label>Password</label><br>
-        <input type="password" name="password"><br><br>
+        <form action="{{ route('login.process') }}" method="POST">
+            @csrf
 
-        <button type="submit">Login</button>
-    </form>
+            <label>Email</label>
+            <input
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                placeholder="Masukkan email"
+                required
+            >
+
+            <label>Password</label>
+            <input
+                type="password"
+                name="password"
+                placeholder="Masukkan password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

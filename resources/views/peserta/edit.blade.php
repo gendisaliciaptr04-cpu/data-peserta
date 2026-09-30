@@ -1,58 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Edit Peserta</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-    <h1>Edit Peserta Sertifikasi</h1>
+<div class="container">
 
-    <form action="{{ route('peserta.update', ['pesertum' => $peserta->id]) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="header">
+        <h1>Edit Peserta</h1>
+        <p>Ubah data peserta sertifikasi</p>
+    </div>
 
-        <label>Nomor Peserta</label><br>
-        <input type="text" name="nomor_peserta"
-               value="{{ $peserta->nomor_peserta }}" required>
+    <div class="card">
 
-        <br><br>
+        @if ($errors->any())
+            <div class="error-box">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <label>Nama Peserta</label><br>
-        <input type="text" name="nama"
-               value="{{ $peserta->nama }}" required>
+        <form
+            action="{{ route('peserta.update', ['pesertum' => $peserta->id]) }}"
+            method="POST"
+        >
 
-        <br><br>
+            @csrf
+            @method('PUT')
 
-        <label>Email</label><br>
-        <input type="email" name="email"
-               value="{{ $peserta->email }}" required>
+            <div class="form-group">
+                <label>Nomor Peserta</label>
 
-        <br><br>
+                <input
+                    type="text"
+                    name="nomor_peserta"
+                    value="{{ old('nomor_peserta', $peserta->nomor_peserta) }}"
+                    required
+                >
+            </div>
 
-        <label>No HP</label><br>
-        <input type="text" name="no_hp"
-               value="{{ $peserta->no_hp }}" required>
+            <div class="form-group">
+                <label>Nama Peserta</label>
 
-        <br><br>
+                <input
+                    type="text"
+                    name="nama"
+                    value="{{ old('nama', $peserta->nama) }}"
+                    required
+                >
+            </div>
 
-        <label>Skema Sertifikasi</label><br>
-        <select name="skema_id" required>
+            <div class="form-group">
+                <label>Email</label>
 
-            @foreach ($skemas as $skema)
-                <option value="{{ $skema->id }}"
-                    {{ $peserta->skema_id == $skema->id ? 'selected' : '' }}>
-                    {{ $skema->nama }}
-                </option>
-            @endforeach
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email', $peserta->email) }}"
+                    required
+                >
+            </div>
 
-        </select>
+            <div class="form-group">
+                <label>No HP</label>
 
-        <br><br>
+                <input
+                    type="text"
+                    name="no_hp"
+                    value="{{ old('no_hp', $peserta->no_hp) }}"
+                    required
+                >
+            </div>
 
-        <button type="submit">Update</button>
-        <a href="{{ route('peserta.index') }}">Batal</a>
+            <div class="form-group">
+                <label>Skema Sertifikasi</label>
 
-    </form>
+                <select name="skema_id" required>
+
+                    @foreach ($skemas as $skema)
+
+                        <option
+                            value="{{ $skema->id }}"
+                            {{ old('skema_id', $peserta->skema_id) == $skema->id ? 'selected' : '' }}
+                        >
+                            {{ $skema->nama }}
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="action-group">
+
+                <button type="submit">
+                    Update
+                </button>
+
+                <a href="{{ route('peserta.index') }}" class="btn btn-secondary">
+                    Batal
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

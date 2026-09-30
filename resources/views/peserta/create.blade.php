@@ -1,52 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Tambah Peserta</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-    <h1>Tambah Peserta Sertifikasi</h1>
+<div class="container">
 
-    <form action="{{ route('peserta.store') }}" method="POST">
-        @csrf
+    <div class="header">
+        <h1>Tambah Peserta</h1>
+        <p>Tambah data peserta sertifikasi</p>
+    </div>
 
-        <label>Nomor Peserta</label><br>
-        <input type="text" name="nomor_peserta" required>
+    <div class="card">
 
-        <br><br>
+        @if ($errors->any())
+            <div class="error-box">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <label>Nama Peserta</label><br>
-        <input type="text" name="nama" required>
+        <form action="{{ route('peserta.store') }}" method="POST">
+            @csrf
 
-        <br><br>
+            <div class="form-group">
+                <label>Nomor Peserta</label>
+                <input
+                    type="text"
+                    name="nomor_peserta"
+                    value="{{ old('nomor_peserta') }}"
+                    required
+                >
+            </div>
 
-        <label>Email</label><br>
-        <input type="email" name="email" required>
+            <div class="form-group">
+                <label>Nama Peserta</label>
+                <input
+                    type="text"
+                    name="nama"
+                    value="{{ old('nama') }}"
+                    required
+                >
+            </div>
 
-        <br><br>
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                >
+            </div>
 
-        <label>No HP</label><br>
-        <input type="text" name="no_hp" required>
+            <div class="form-group">
+                <label>No HP</label>
+                <input
+                    type="text"
+                    name="no_hp"
+                    value="{{ old('no_hp') }}"
+                    required
+                >
+            </div>
 
-        <br><br>
+            <div class="form-group">
+                <label>Skema Sertifikasi</label>
 
-        <label>Skema Sertifikasi</label><br>
-        <select name="skema_id" required>
-            <option value="">-- Pilih Skema --</option>
+                <select name="skema_id" required>
 
-            @foreach ($skemas as $skema)
-                <option value="{{ $skema->id }}">
-                    {{ $skema->nama }}
-                </option>
-            @endforeach
-        </select>
+                    <option value="">
+                        -- Pilih Skema --
+                    </option>
 
-        <br><br>
+                    @foreach ($skemas as $skema)
 
-        <button type="submit">Simpan</button>
-        <a href="{{ route('peserta.index') }}">Batal</a>
+                        <option
+                            value="{{ $skema->id }}"
+                            {{ old('skema_id') == $skema->id ? 'selected' : '' }}
+                        >
+                            {{ $skema->nama }}
+                        </option>
 
-    </form>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="action-group">
+
+                <button type="submit">
+                    Simpan
+                </button>
+
+                <a href="{{ route('peserta.index') }}" class="btn btn-secondary">
+                    Batal
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>
