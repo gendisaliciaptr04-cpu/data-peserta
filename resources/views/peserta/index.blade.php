@@ -21,7 +21,6 @@
         </a>
 
         <form action="{{ route('peserta.index') }}" method="GET" class="search-box">
-
             <input
                 type="text"
                 name="search"
@@ -29,25 +28,21 @@
                 value="{{ $search ?? '' }}"
             >
 
-            <button type="submit">
-                Cari
-            </button>
+            <button type="submit">Cari</button>
 
             @if($search)
                 <a href="{{ route('peserta.index') }}" class="btn btn-secondary">
                     Reset
                 </a>
             @endif
-
         </form>
 
         <div class="table-wrapper">
-
             <table>
-
                 <tr>
                     <th>No</th>
                     <th>Nomor Peserta</th>
+                    <th>NIK</th>
                     <th>Nama</th>
                     <th>Email</th>
                     <th>No HP</th>
@@ -56,25 +51,16 @@
                 </tr>
 
                 @forelse ($pesertas as $peserta)
-
                 <tr>
-
                     <td>{{ $loop->iteration }}</td>
-
                     <td>{{ $peserta->nomor_peserta }}</td>
-
+                    <td>{{ $peserta->nik ?? '-' }}</td>
                     <td>{{ $peserta->nama }}</td>
-
                     <td>{{ $peserta->email }}</td>
-
                     <td>{{ $peserta->no_hp }}</td>
-
                     <td>{{ $peserta->skema->nama ?? '-' }}</td>
-
                     <td>
-
                         <div class="action-group">
-
                             <a href="{{ route('peserta.show', $peserta->id) }}">
                                 Detail
                             </a>
@@ -99,25 +85,17 @@
                                     Hapus
                                 </button>
                             </form>
-
                         </div>
-
                     </td>
-
                 </tr>
-
                 @empty
-
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                         Data peserta tidak ditemukan.
                     </td>
                 </tr>
-
                 @endforelse
-
             </table>
-
         </div>
 
         <br>

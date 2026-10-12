@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,6 +17,7 @@
 
     <div class="card">
 
+        <!-- Menampilkan pesan validasi -->
         @if ($errors->any())
             <div class="error-box">
                 <ul>
@@ -26,82 +28,63 @@
             </div>
         @endif
 
+        <!-- Form untuk menyimpan peserta baru -->
         <form action="{{ route('peserta.store') }}" method="POST">
             @csrf
 
             <div class="form-group">
                 <label>Nomor Peserta</label>
-                <input
-                    type="text"
-                    name="nomor_peserta"
-                    value="{{ old('nomor_peserta') }}"
-                    required
-                >
+                <input type="text" name="nomor_peserta"
+                    value="{{ old('nomor_peserta') }}" required>
+            </div>
+
+            <!-- Input NIK harus tepat 16 digit -->
+            <div class="form-group">
+                <label>NIK</label>
+                <input type="text" name="nik"
+                    value="{{ old('nik') }}"
+                    maxlength="16" inputmode="numeric" required>
             </div>
 
             <div class="form-group">
                 <label>Nama Peserta</label>
-                <input
-                    type="text"
-                    name="nama"
-                    value="{{ old('nama') }}"
-                    required
-                >
+                <input type="text" name="nama"
+                    value="{{ old('nama') }}" required>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input
-                    type="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    required
-                >
+                <input type="email" name="email"
+                    value="{{ old('email') }}" required>
             </div>
 
+            <!-- Nomor HP dibatasi maksimal 11 digit oleh validasi server -->
             <div class="form-group">
                 <label>No HP</label>
-                <input
-                    type="text"
-                    name="no_hp"
+                <input type="text" name="no_hp"
                     value="{{ old('no_hp') }}"
-                    required
-                >
+                    maxlength="11" inputmode="numeric" required>
             </div>
 
+            <!-- Pilihan skema diambil dari database -->
             <div class="form-group">
                 <label>Skema Sertifikasi</label>
-
                 <select name="skema_id" required>
-
-                    <option value="">
-                        -- Pilih Skema --
-                    </option>
-
+                    <option value="">-- Pilih Skema --</option>
                     @foreach ($skemas as $skema)
-
-                        <option
-                            value="{{ $skema->id }}"
-                            {{ old('skema_id') == $skema->id ? 'selected' : '' }}
-                        >
+                        <option value="{{ $skema->id }}"
+                            {{ old('skema_id') == $skema->id ? 'selected' : '' }}>
                             {{ $skema->nama }}
                         </option>
-
                     @endforeach
-
                 </select>
             </div>
 
             <div class="action-group">
-
-                <button type="submit">
-                    Simpan
-                </button>
-
+                <button type="submit">Simpan</button>
                 <a href="{{ route('peserta.index') }}" class="btn btn-secondary">
                     Batal
                 </a>
-
             </div>
 
         </form>

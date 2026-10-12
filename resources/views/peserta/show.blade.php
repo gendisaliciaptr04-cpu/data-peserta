@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -24,6 +25,11 @@
             </tr>
 
             <tr>
+                <th>NIK</th>
+                <td>{{ $pesertum->nik ?? '-' }}</td>
+            </tr>
+
+            <tr>
                 <th>Nama Peserta</th>
                 <td>{{ $pesertum->nama }}</td>
             </tr>
@@ -42,32 +48,22 @@
                 <th>Skema Sertifikasi</th>
                 <td>{{ $pesertum->skema->nama ?? '-' }}</td>
             </tr>
-
         </table>
-
         <br>
-
         <div class="action-group">
-
             <a
                 href="{{ route('peserta.edit', $pesertum->id) }}"
                 class="btn"
             >
                 Edit
             </a>
-
             <a
                 href="{{ route('peserta.index') }}"
                 class="btn btn-secondary"
             >
                 Kembali
             </a>
-
         </div>
-
     </div>
-
 </div>
-
 </body>
-</html>

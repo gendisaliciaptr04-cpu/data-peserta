@@ -8,13 +8,18 @@
 <body>
 
 <div class="login-page">
-
     <div class="login-card">
 
         <div class="login-title">
             <h1>Login Admin</h1>
             <p>Aplikasi Data Peserta Sertifikasi</p>
         </div>
+
+        @if (session('success'))
+            <div class="success-box">
+                {{ session('success') }}
+            </div>
+        @endif
 
         @if ($errors->any())
             <div class="error-box">
@@ -46,14 +51,15 @@
                 required
             >
 
-            <button type="submit">
-                Login
-            </button>
-
+            <button type="submit">Login</button>
         </form>
 
-    </div>
+        <p style="text-align: center; margin-top: 15px;">
+            Belum punya akun?
+            <a href="{{ route('register') }}">Register</a>
+        </p>
 
+    </div>
 </div>
 
 </body>
