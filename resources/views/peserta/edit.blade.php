@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Edit Peserta</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
+
 <body>
 
 <div class="container">
@@ -26,17 +28,14 @@
             </div>
         @endif
 
-        <form
-            action="{{ route('peserta.update', ['pesertum' => $peserta->id]) }}"
-            method="POST"
-        >
+        <!-- Form untuk mengubah data peserta -->
+        <form action="{{ route('peserta.update', ['pesertum' => $peserta->id]) }}" method="POST">
 
             @csrf
             @method('PUT')
 
             <div class="form-group">
                 <label>Nomor Peserta</label>
-
                 <input
                     type="text"
                     name="nomor_peserta"
@@ -47,7 +46,6 @@
 
             <div class="form-group">
                 <label>Nama Peserta</label>
-
                 <input
                     type="text"
                     name="nama"
@@ -58,7 +56,6 @@
 
             <div class="form-group">
                 <label>Email</label>
-
                 <input
                     type="email"
                     name="email"
@@ -69,7 +66,6 @@
 
             <div class="form-group">
                 <label>No HP</label>
-
                 <input
                     type="text"
                     name="no_hp"
@@ -78,24 +74,20 @@
                 >
             </div>
 
+            <!-- Pilihan skema -->
             <div class="form-group">
                 <label>Skema Sertifikasi</label>
 
                 <select name="skema_id" required>
-
                     @foreach ($skemas as $skema)
-
                         <option
                             value="{{ $skema->id }}"
                             {{ old('skema_id', $peserta->skema_id) == $skema->id ? 'selected' : '' }}
                         >
                             {{ $skema->nama }}
                         </option>
-
                     @endforeach
-
                 </select>
-
             </div>
 
             <div class="action-group">
