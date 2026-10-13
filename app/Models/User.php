@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Models;
@@ -30,5 +29,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function peserta()
+    {
+        return $this->hasOne(\App\Models\Peserta::class);
     }
 }

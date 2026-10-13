@@ -1,8 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Peserta</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
@@ -17,7 +17,6 @@
 
     <div class="card">
 
-        <!-- Menampilkan pesan validasi -->
         @if ($errors->any())
             <div class="error-box">
                 <ul>
@@ -28,7 +27,6 @@
             </div>
         @endif
 
-        <!-- Form untuk menyimpan peserta baru -->
         <form action="{{ route('peserta.store') }}" method="POST">
             @csrf
 
@@ -38,7 +36,6 @@
                     value="{{ old('nomor_peserta') }}" required>
             </div>
 
-            <!-- Input NIK harus tepat 16 digit -->
             <div class="form-group">
                 <label>NIK</label>
                 <input type="text" name="nik"
@@ -49,7 +46,11 @@
             <div class="form-group">
                 <label>Nama Peserta</label>
                 <input type="text" name="nama"
-                    value="{{ old('nama') }}" required>
+                    value="{{ old('nama') }}"
+                    maxlength="50"
+                    pattern="[A-Za-zÀ-ÖØ-öø-ÿĀ-ž ]+"
+                    title="Nama maksimal 50 karakter dan hanya boleh menggunakan huruf serta spasi."
+                    required>
             </div>
 
             <div class="form-group">
@@ -58,15 +59,18 @@
                     value="{{ old('email') }}" required>
             </div>
 
-            <!-- Nomor HP dibatasi maksimal 11 digit oleh validasi server -->
             <div class="form-group">
-                <label>No HP</label>
-                <input type="text" name="no_hp"
+                <label>No. Telepon</label>
+                <input type="tel" name="no_hp"
                     value="{{ old('no_hp') }}"
-                    maxlength="11" inputmode="numeric" required>
+                    minlength="11"
+                    maxlength="13"
+                    pattern="[0-9]{11,13}"
+                    inputmode="numeric"
+                    title="Nomor telepon harus terdiri dari 11 sampai 13 angka tanpa huruf atau simbol."
+                    required>
             </div>
 
-            <!-- Pilihan skema diambil dari database -->
             <div class="form-group">
                 <label>Skema Sertifikasi</label>
                 <select name="skema_id" required>

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Peserta extends Model
 {
-    // Menentukan field yang boleh diisi secara massal
     protected $fillable = [
+        'user_id',
         'nomor_peserta',
         'nik',
         'nama',
@@ -16,9 +17,13 @@ class Peserta extends Model
         'skema_id',
     ];
 
-    // Relasi peserta dengan skema sertifikasi
-    public function skema()
+    public function skema(): BelongsTo
     {
         return $this->belongsTo(Skema::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

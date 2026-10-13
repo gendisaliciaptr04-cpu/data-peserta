@@ -15,8 +15,10 @@ class PesertaController extends Controller
 
         $pesertas = Peserta::with('skema')
             ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhere('nomor_peserta', 'like', '%' . $search . '%');
+                $query->where(function ($q) use ($search) {
+                    $q->where('nama', 'like', '%' . $search . '%')
+                        ->orWhere('nomor_peserta', 'like', '%' . $search . '%');
+                });
             })
             ->get();
 
@@ -34,29 +36,36 @@ class PesertaController extends Controller
     // Menyimpan data peserta baru
     public function store(Request $request)
     {
-        // Validasi data sebelum disimpan
         $request->validate([
             'nomor_peserta' => 'required',
             'nik' => ['required', 'digits:16'],
-            'nama' => ['required', 'regex:/^[\pL\s]+$/u'],
+            'nama' => ['required', 'string', 'max:50', 'regex:/^[\pL\s]+$/u'],
             'email' => 'required|email',
-            'no_hp' => ['required', 'regex:/^[0-9]{1,11}$/'],
+            'no_hp' => ['required', 'digits_between:11,13'],
             'skema_id' => 'required|exists:skemas,id',
         ], [
             'nomor_peserta.required' => 'Nomor peserta wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',
             'nik.digits' => 'NIK harus tepat 16 digit.',
             'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 50 karakter.',
             'nama.regex' => 'Nama hanya boleh berisi huruf dan spasi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            'no_hp.required' => 'Nomor HP wajib diisi.',
-            'no_hp.regex' => 'Nomor HP hanya boleh angka dan maksimal 11 digit.',
+            'no_hp.required' => 'Nomor telepon wajib diisi.',
+            'no_hp.digits_between' => 'Nomor telepon harus terdiri dari 11 sampai 13 angka tanpa huruf atau simbol.',
             'skema_id.required' => 'Skema sertifikasi wajib dipilih.',
             'skema_id.exists' => 'Skema sertifikasi tidak valid.',
         ]);
 
-        Peserta::create($request->all());
+        Peserta::create($request->only([
+            'nomor_peserta',
+            'nik',
+            'nama',
+            'email',
+            'no_hp',
+            'skema_id',
+        ]));
 
         return redirect()->route('peserta.index');
     }
@@ -76,36 +85,43 @@ class PesertaController extends Controller
 
         return view('peserta.edit', [
             'peserta' => $pesertum,
-            'skemas' => $skemas
+            'skemas' => $skemas,
         ]);
     }
 
     // Memperbarui data peserta
     public function update(Request $request, Peserta $pesertum)
     {
-        // Validasi data sebelum diperbarui
         $request->validate([
             'nomor_peserta' => 'required',
             'nik' => ['required', 'digits:16'],
-            'nama' => ['required', 'regex:/^[\pL\s]+$/u'],
+            'nama' => ['required', 'string', 'max:50', 'regex:/^[\pL\s]+$/u'],
             'email' => 'required|email',
-            'no_hp' => ['required', 'regex:/^[0-9]{1,11}$/'],
+            'no_hp' => ['required', 'digits_between:11,13'],
             'skema_id' => 'required|exists:skemas,id',
         ], [
             'nomor_peserta.required' => 'Nomor peserta wajib diisi.',
             'nik.required' => 'NIK wajib diisi.',
             'nik.digits' => 'NIK harus tepat 16 digit.',
             'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 50 karakter.',
             'nama.regex' => 'Nama hanya boleh berisi huruf dan spasi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            'no_hp.required' => 'Nomor HP wajib diisi.',
-            'no_hp.regex' => 'Nomor HP hanya boleh angka dan maksimal 11 digit.',
+            'no_hp.required' => 'Nomor telepon wajib diisi.',
+            'no_hp.digits_between' => 'Nomor telepon harus terdiri dari 11 sampai 13 angka tanpa huruf atau simbol.',
             'skema_id.required' => 'Skema sertifikasi wajib dipilih.',
             'skema_id.exists' => 'Skema sertifikasi tidak valid.',
         ]);
 
-        $pesertum->update($request->all());
+        $pesertum->update($request->only([
+            'nomor_peserta',
+            'nik',
+            'nama',
+            'email',
+            'no_hp',
+            'skema_id',
+        ]));
 
         return redirect()->route('peserta.index');
     }
