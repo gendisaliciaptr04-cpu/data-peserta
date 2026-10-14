@@ -11,9 +11,9 @@ use App\Http\Controllers\UserPesertaController;
 use App\Models\Peserta;
 use App\Models\Skema;
 
-// Halaman utama
+// Halaman Welcome
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 // Login

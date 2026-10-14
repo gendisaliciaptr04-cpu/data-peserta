@@ -16,14 +16,23 @@ class UserPesertaController extends Controller
         return view('user-peserta.show', compact('pesertum'));
     }
 
-    // Menampilkan form edit peserta milik User
-    public function edit(Peserta $pesertum)
+    // Memastikan peserta merupakan milik user yang sedang login
+    private function cekPemilik(Peserta $pesertum)
     {
         abort_unless(
-            auth()->user()->id === $pesertum->user_id,
+            auth()->check() &&
+            auth()->id() !== null &&
+            $pesertum->user_id !== null &&
+            (int) auth()->id() === (int) $pesertum->user_id,
             403,
             'Anda tidak memiliki izin untuk mengedit data peserta ini.'
         );
+    }
+
+    // Menampilkan form edit peserta
+    public function edit(Peserta $pesertum)
+    {
+        $this->cekPemilik($pesertum);
 
         $skemas = Skema::all();
 
@@ -33,14 +42,10 @@ class UserPesertaController extends Controller
         ]);
     }
 
-    // Memperbarui data peserta milik User
+    // Memperbarui data peserta
     public function update(Request $request, Peserta $pesertum)
     {
-        abort_unless(
-            auth()->user()->id === $pesertum->user_id,
-            403,
-            'Anda tidak memiliki izin untuk memperbarui data peserta ini.'
-        );
+        $this->cekPemilik($pesertum);
 
         $request->validate([
             'nomor_peserta' => 'required',
